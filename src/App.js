@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUsers } from './slice/userSlice';
 
 function App() {
+
+  // const count = useSelector((state) => state.counter.value);
+  const data = useSelector((state) => {
+    console.log("State : ", state.users);
+    return state.users;
+  });
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getUsers());
+  //   console.log("This is users: " + users);
+  // }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(getUsers())}
         >
-          Learn React
-        </a>
-      </header>
+          get users
+        </button>
+      </div>
+
+      {data.users.map((item)=>(
+        <li>{item.name}</li>
+      ))}
     </div>
   );
 }
